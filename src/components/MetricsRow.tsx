@@ -4,7 +4,7 @@ export default function MetricsRow() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
       <section
-        className="lg:col-span-8 bg-[#181A20] border border-[#252835] p-6 flex flex-col justify-between"
+        className="lg:col-span-8 bg-[#181A20] border border-[#252835] p-6 flex flex-col justify-between text-white"
         style={{ borderRadius: "28px", overflow: "hidden" }}
       >
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pb-6 border-b border-[#232633]">
@@ -36,7 +36,7 @@ export default function MetricsRow() {
       </section>
 
       <section
-        className="lg:col-span-4 bg-[#181A20] border border-[#252835] p-6 flex flex-col justify-between"
+        className="lg:col-span-4 bg-[#181A20] border border-[#252835] p-6 flex flex-col justify-between text-white"
         style={{ borderRadius: "28px", overflow: "hidden" }}
       >
         <div>
