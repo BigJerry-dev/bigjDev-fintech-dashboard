@@ -24,7 +24,7 @@ export default function MetricsRow() {
             <div className="text-xs text-gray-400 mt-1">-3 days faster than Q3</div>
           </div>
         </div>
-        <div className="pt-5 flex items-center justify-between text- font-semibold text-gray-500 uppercase">
+        <div className="pt-5 flex items-center justify-between text-[11px] font-semibold text-gray-500 uppercase">
           <span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
         </div>
         <div className="grid grid-cols-4 gap-2 mt-2">
@@ -44,15 +44,15 @@ export default function MetricsRow() {
           <div className="text-3xl font-bold mt-2">${metrics.cashFlow.toLocaleString()}.00</div>
           <div className="grid grid-cols-3 gap-2.5 mt-5">
             <button className="bg-[#1F222B] p-3 text-left" style={{ borderRadius: "20px" }}>
-              <span className="text- text-gray-400 block">*4443</span>
+              <span className="text-[11px] text-gray-400 block">*4443</span>
               <span className="text-xs font-semibold">{"Vi" + "sa"}</span>
             </button>
             <button className="bg-[#B8F500] p-3 text-left text-black" style={{ borderRadius: "20px" }}>
-              <span className="text- font-semibold block">#177210</span>
+              <span className="text-[11px] font-semibold block">#177210</span>
               <span className="text-xs font-black">Stripe</span>
             </button>
             <button className="bg-[#1F222B] p-3 text-left" style={{ borderRadius: "20px" }}>
-              <span className="text- text-gray-400 block">#711221</span>
+              <span className="text-[11px] text-gray-400 block">#711221</span>
               <span className="text-xs font-semibold">{"Pay" + "Pal"}</span>
             </button>
           </div>
