@@ -10,8 +10,8 @@ export default function TitleBar() {
         </span>
       </div>
       <div className="flex items-center gap-2.5">
-        <button className="bg-[#181A20] border border-[#2B2F3D] px-4 py-2 rounded- text-xs font-medium text-white">Export Report</button>
-        <button className="bg-[#20232C] border border-[#303646] px-4 py-2 rounded- text-xs font-medium text-white flex items-center gap-2">
+        <button className="bg-[#181A20] border border-[#2B2F3D] px-4 py-2 rounded-full text-xs font-medium text-white">Export Report</button>
+        <button className="bg-[#20232C] border border-[#303646] px-4 py-2 rounded-full text-xs font-medium text-white flex items-center gap-2">
           <span className="text-[#B8F500] text-base">+</span> New Transaction
         </button>
       </div>
