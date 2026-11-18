@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "BigJDev Finance",
-  description: "Invoices and cash flow dashboard demo built with Next.js, TypeScript and Tailwind CSS.",
+  title: "BigJDev Pay",
+  description: "Payment gateway operations dashboard demo built with Next.js, TypeScript and Tailwind CSS.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
