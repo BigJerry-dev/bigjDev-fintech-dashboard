@@ -11,16 +11,16 @@ export default function TitleBar() {
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Overview</h1>
         <span className="px-3 py-1 bg-white border border-line rounded-full text-xs font-semibold text-muted flex items-center gap-1.5 whitespace-nowrap">
           <span className="w-2 h-2 rounded-full bg-accent"></span>
-          Q4 FY24 • Last 30 Days
+          Last 30 days
         </span>
       </div>
 
       <div className="flex items-center gap-2.5">
         <button className="bg-white border border-line px-4 py-2 rounded-full text-xs font-semibold text-ink hover:border-ink transition-colors">
-          Export Report
+          Export report
         </button>
         <button className="group bg-ink border border-ink px-4 py-2 rounded-full text-xs font-semibold text-white flex items-center gap-2 hover:bg-accent hover:border-accent hover:text-ink transition-colors">
-          <span className="text-accent text-base leading-none group-hover:text-ink">+</span> New Transaction
+          <span className="text-accent text-base leading-none group-hover:text-ink">+</span> Add merchant
         </button>
       </div>
     </div>
