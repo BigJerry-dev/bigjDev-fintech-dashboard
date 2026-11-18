@@ -1,78 +1,76 @@
-"use client";
-import { useState } from "react";
-import { invoices } from "../data/invoices";
+import { metrics } from "../data/invoices";
 
-export default function InvoiceWorkspace() {
-  const [selectedId, setSelectedId] = useState("# 427-012");
-  const selected = invoices.find((i) => i.id === selectedId) || invoices[2];
+const usd = (amount: number) => `$${amount.toLocaleString()}.00`;
 
+const months = [
+  { label: "Sep", fill: 100 },
+  { label: "Oct", fill: 60 },
+  { label: "Nov", fill: 85 },
+  { label: "Dec", fill: 30 },
+];
+
+const methods = [
+  { ref: "*4443", name: "Visa", selected: false },
+  { ref: "#177210", name: "Stripe", selected: true },
+  { ref: "#711221", name: "PayPal", selected: false },
+];
+
+export default function MetricsRow() {
   return (
-    <div
-      className="bg-white p-3 text-black grid grid-cols-1 lg:grid-cols-12 gap-3"
-      style={{ borderRadius: "32px", overflow: "hidden" }}
-    >
-      <section className="lg:col-span-5 p-4">
-        <h2 className="text-base font-bold pb-4">Unpaid Invoices</h2>
-        <div className="flex flex-col gap-2">
-          {invoices.map((inv) => {
-            const active = inv.id === selectedId;
-            return (
-              <button
-                key={inv.id}
-                onClick={() => setSelectedId(inv.id)}
-                className={`flex items-center justify-between p-2.5 text-left w-full ${active ? "bg-[#111317] text-white" : "hover:bg-zinc-50"}`}
-                style={{ borderRadius: active ? "999px" : "20px" }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs">{inv.customer[0]}</div>
-                  <div>
-                    <div className="text-xs font-bold">{inv.id}</div>
-                    <div className={`text-[11px] ${active ? "text-zinc-400" : "text-zinc-500"}`}>{inv.due}</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className={`text-[11px] px-2.5 py-0.5 rounded-full ${active ? "bg-[#252834] text-zinc-300" : "bg-zinc-100 text-zinc-500"}`}>{inv.status}</span>
-                  <span className="text-xs font-bold">$ {inv.amount.toLocaleString()}.00</span>
-                </div>
-              </button>
-            );
-          })}
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <section className="lg:col-span-8 bg-white border border-line rounded-[28px] p-6 flex flex-col justify-between overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pb-6 border-b border-line">
+          <div>
+            <span className="text-xs text-muted">Total Revenue</span>
+            <div className="text-3xl font-bold mt-1.5">{usd(metrics.revenue)}</div>
+            <div className="text-xs text-emerald-600 font-semibold mt-1">+14.8% <span className="text-muted font-normal">vs last month</span></div>
+          </div>
+          <div>
+            <span className="text-xs text-muted">Net Cash Flow</span>
+            <div className="text-3xl font-bold mt-1.5">{usd(metrics.cashFlow)}</div>
+            <div className="text-xs text-emerald-600 font-semibold mt-1">● Positive balance</div>
+          </div>
+          <div>
+            <span className="text-xs text-muted">Average Deal Cycle</span>
+            <div className="text-3xl font-bold mt-1.5">{metrics.dealCycle} <span className="text-sm font-normal text-muted">days</span></div>
+            <div className="text-xs text-muted mt-1">-3 days faster than Q3</div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-4 gap-3 pt-5">
+          {months.map((m) => (
+            <div key={m.label}>
+              <div className="h-2 rounded-full bg-surface overflow-hidden">
+                <div className="h-full rounded-full bg-accent" style={{ width: `${m.fill}%` }}></div>
+              </div>
+              <div className="mt-2 text-[11px] font-semibold text-muted">{m.label}</div>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section
-        className="lg:col-span-7 bg-[#15171D] p-6 text-white flex flex-col justify-between border border-[#232734]"
-        style={{ borderRadius: "28px", overflow: "hidden" }}
-      >
+      <section className="lg:col-span-4 bg-white border border-line rounded-[28px] p-6 flex flex-col justify-between overflow-hidden">
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-6 border-b border-[#232633]">
-            <div>
-              <span className="text-[11px] text-gray-400">Invoice details</span>
-              <div className="text-xl font-bold mt-1">{selected.id} <span className="text-[11px] font-medium text-zinc-400 bg-[#212531] px-2 py-0.5 rounded-full">{selected.status}</span></div>
-            </div>
-            <div>
-              <span className="text-[11px] text-gray-400">Company</span>
-              <div className="text-base font-bold mt-1">{selected.company} ◆</div>
-            </div>
-            <div>
-              <span className="text-[11px] text-gray-400">Customer</span>
-              <div className="text-xs font-bold mt-1">{selected.customer}</div>
-              <div className="text-[11px] text-gray-400">CEO {selected.company} Pvt Ltd</div>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 my-6">
-            <div className="bg-[#1C1F28] p-4 border border-[#272B38]" style={{ borderRadius: "20px" }}><div className="text-xs font-bold">$ 10,630.80</div><span className="text-[11px] text-gray-400">Concept Development</span></div>
-            <div className="bg-[#1C1F28] p-4 border border-[#272B38]" style={{ borderRadius: "20px" }}><div className="text-xs font-bold">$ 31,892.40</div><span className="text-[11px] text-gray-400">CRM Development</span></div>
-            <div className="bg-[#1C1F28] p-4 border border-[#272B38]" style={{ borderRadius: "20px" }}><div className="text-xs font-bold">$ 10,630.80</div><span className="text-[11px] text-gray-400">CRM Integration</span></div>
+          <span className="text-xs text-muted">Available for Instant Payout</span>
+          <div className="text-3xl font-bold mt-2">{usd(metrics.cashFlow)}</div>
+          <div className="grid grid-cols-3 gap-2.5 mt-5">
+            {methods.map((m) => (
+              <button
+                key={m.name}
+                className={`p-3 text-left rounded-[20px] border transition-colors ${
+                  m.selected ? "bg-accent border-accent text-ink" : "bg-surface border-line text-ink hover:border-ink"
+                }`}
+              >
+                <span className={`text-[11px] block ${m.selected ? "text-ink/70" : "text-muted"}`}>{m.ref}</span>
+                <span className="text-xs font-bold">{m.name}</span>
+              </button>
+            ))}
           </div>
         </div>
-        <div className="pt-5 border-t border-[#232633] flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center gap-6">
-            <div><span className="text-[11px] text-gray-400 block">Sub Total</span><span className="text-sm font-bold">${selected.amount.toLocaleString()}.00</span></div>
-            <div><span className="text-[11px] text-gray-400 block">Total</span><span className="text-sm font-bold">${selected.amount.toLocaleString()}.00</span></div>
-            <div><span className="text-[11px] text-gray-400 block">Balance Due</span><span className="text-sm font-bold">${selected.amount.toLocaleString()}.00</span></div>
-          </div>
-          <button className="bg-[#B8F500] text-black font-extrabold px-5 py-2.5 rounded-full text-xs">Pay out now</button>
+        <div className="mt-4 flex justify-end">
+          <button className="bg-ink text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-accent hover:text-ink transition-colors">
+            Pay out now
+          </button>
         </div>
       </section>
     </div>
