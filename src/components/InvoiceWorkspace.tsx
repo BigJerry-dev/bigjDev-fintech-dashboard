@@ -2,17 +2,30 @@
 import { useState } from "react";
 import { invoices } from "../data/invoices";
 
-const usd = (amount: number) => `$${amount.toLocaleString()}.00`;
+const money = (amount: number) =>
+  amount.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
-const lineItems = [
-  { label: "Concept Development", amount: "$10,630.80" },
-  { label: "CRM Development", amount: "$31,892.40" },
-  { label: "CRM Integration", amount: "$10,630.80" },
+// How an invoice total is split across its three line items.
+const splits = [
+  { label: "Concept Development", share: 0.2 },
+  { label: "CRM Development", share: 0.6 },
 ];
+
+function getLineItems(total: number) {
+  const items = splits.map((s) => ({
+    label: s.label,
+    amount: Math.round(total * s.share * 100) / 100,
+  }));
+  const used = items.reduce((sum, item) => sum + item.amount, 0);
+  // The last item takes whatever is left, so the three always add up to the total.
+  items.push({ label: "CRM Integration", amount: Math.round((total - used) * 100) / 100 });
+  return items;
+}
 
 export default function InvoiceWorkspace() {
   const [selectedId, setSelectedId] = useState("# 427-012");
   const selected = invoices.find((i) => i.id === selectedId) || invoices[2];
+  const lineItems = getLineItems(selected.amount);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
@@ -32,7 +45,7 @@ export default function InvoiceWorkspace() {
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs ${
+                    className={`size-9 rounded-full flex items-center justify-center font-bold text-xs ${
                       active ? "bg-white text-ink" : "bg-surface text-ink"
                     }`}
                   >
@@ -51,7 +64,7 @@ export default function InvoiceWorkspace() {
                   >
                     {inv.status}
                   </span>
-                  <span className="text-xs font-bold">{usd(inv.amount)}</span>
+                  <span className="text-xs font-bold">{money(inv.amount)}</span>
                 </div>
               </button>
             );
@@ -83,7 +96,7 @@ export default function InvoiceWorkspace() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 my-6">
             {lineItems.map((item) => (
               <div key={item.label} className="bg-surface rounded-[20px] p-4">
-                <div className="text-sm font-bold">{item.amount}</div>
+                <div className="text-sm font-bold">{money(item.amount)}</div>
                 <span className="text-[11px] text-muted">{item.label}</span>
               </div>
             ))}
@@ -92,9 +105,9 @@ export default function InvoiceWorkspace() {
 
         <div className="pt-5 border-t border-line flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-6 flex-wrap">
-            <div><span className="text-[11px] text-muted block">Sub Total</span><span className="text-sm font-bold">{usd(selected.amount)}</span></div>
-            <div><span className="text-[11px] text-muted block">Total</span><span className="text-sm font-bold">{usd(selected.amount)}</span></div>
-            <div><span className="text-[11px] text-muted block">Balance Due</span><span className="text-sm font-bold">{usd(selected.amount)}</span></div>
+            <div><span className="text-[11px] text-muted block">Sub Total</span><span className="text-sm font-bold">{money(selected.amount)}</span></div>
+            <div><span className="text-[11px] text-muted block">Total</span><span className="text-sm font-bold">{money(selected.amount)}</span></div>
+            <div><span className="text-[11px] text-muted block">Balance Due</span><span className="text-sm font-bold">{money(selected.amount)}</span></div>
           </div>
           <button className="bg-accent text-ink font-bold px-5 py-2.5 rounded-full text-xs hover:bg-ink hover:text-white transition-colors">
             Pay out now
