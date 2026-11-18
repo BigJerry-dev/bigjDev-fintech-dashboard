@@ -1,16 +1,17 @@
 export default function Header() {
   const links = [
     { label: "Overview", active: true },
-    { label: "Estimates", active: false },
-    { label: "Invoices", active: false },
-    { label: "Payments", active: false },
+    { label: "Transactions", active: false },
+    { label: "Merchants", active: false },
+    { label: "Settlements", active: false },
+    { label: "Disputes", active: false },
   ];
 
   return (
     <header className="flex items-center justify-between gap-4 flex-wrap">
       <div className="flex items-center gap-2.5">
         <span className="size-8 bg-accent rounded-full flex items-center justify-center font-extrabold text-ink text-sm">B</span>
-        <span className="text-lg font-bold tracking-tight">BigJDev Finance</span>
+        <span className="text-lg font-bold tracking-tight">BigJDev Pay</span>
       </div>
 
       <nav
