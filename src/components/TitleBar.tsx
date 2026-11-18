@@ -2,12 +2,6 @@ export default function TitleBar() {
   return (
     <div className="flex items-center justify-between gap-4 flex-wrap">
       <div className="flex items-center gap-3 flex-wrap">
-        <button
-          aria-label="Go back"
-          className="w-8 h-8 rounded-full bg-white border border-line text-muted flex items-center justify-center hover:border-ink hover:text-ink transition-colors"
-        >
-          ←
-        </button>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Overview</h1>
         <span className="px-3 py-1 bg-white border border-line rounded-full text-xs font-semibold text-muted flex items-center gap-1.5 whitespace-nowrap">
           <span className="w-2 h-2 rounded-full bg-accent"></span>
