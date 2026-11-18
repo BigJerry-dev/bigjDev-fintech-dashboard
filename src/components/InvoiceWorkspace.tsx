@@ -1,74 +1,102 @@
-import { metrics } from "../data/invoices";
+"use client";
+import { useState } from "react";
+import { invoices } from "../data/invoices";
 
 const usd = (amount: number) => `$${amount.toLocaleString()}.00`;
 
-const months = [
-  { label: "Sep", fill: 100 },
-  { label: "Oct", fill: 60 },
-  { label: "Nov", fill: 85 },
-  { label: "Dec", fill: 30 },
+const lineItems = [
+  { label: "Concept Development", amount: "$10,630.80" },
+  { label: "CRM Development", amount: "$31,892.40" },
+  { label: "CRM Integration", amount: "$10,630.80" },
 ];
 
-const methods = [
-  { ref: "*4443", name: "Visa", selected: false },
-  { ref: "#177210", name: "Stripe", selected: true },
-  { ref: "#711221", name: "PayPal", selected: false },
-];
+export default function InvoiceWorkspace() {
+  const [selectedId, setSelectedId] = useState("# 427-012");
+  const selected = invoices.find((i) => i.id === selectedId) || invoices[2];
 
-export default function MetricsRow() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      <section className="lg:col-span-8 bg-white border border-line rounded-[28px] p-6 flex flex-col justify-between overflow-hidden">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pb-6 border-b border-line">
-          <div>
-            <span className="text-xs text-muted">Total Revenue</span>
-            <div className="text-3xl font-bold mt-1.5">{usd(metrics.revenue)}</div>
-            <div className="text-xs text-emerald-600 font-semibold mt-1">+14.8% <span className="text-muted font-normal">vs last month</span></div>
-          </div>
-          <div>
-            <span className="text-xs text-muted">Net Cash Flow</span>
-            <div className="text-3xl font-bold mt-1.5">{usd(metrics.cashFlow)}</div>
-            <div className="text-xs text-emerald-600 font-semibold mt-1">● Positive balance</div>
-          </div>
-          <div>
-            <span className="text-xs text-muted">Average Deal Cycle</span>
-            <div className="text-3xl font-bold mt-1.5">{metrics.dealCycle} <span className="text-sm font-normal text-muted">days</span></div>
-            <div className="text-xs text-muted mt-1">-3 days faster than Q3</div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-4 gap-3 pt-5">
-          {months.map((m) => (
-            <div key={m.label}>
-              <div className="h-2 rounded-full bg-surface overflow-hidden">
-                <div className="h-full rounded-full bg-accent" style={{ width: `${m.fill}%` }}></div>
-              </div>
-              <div className="mt-2 text-[11px] font-semibold text-muted">{m.label}</div>
-            </div>
-          ))}
+      <section className="lg:col-span-5 bg-white border border-line rounded-[28px] p-5">
+        <h2 className="text-base font-bold pb-4 px-1">Unpaid Invoices</h2>
+        <div className="flex flex-col gap-2">
+          {invoices.map((inv) => {
+            const active = inv.id === selectedId;
+            return (
+              <button
+                key={inv.id}
+                onClick={() => setSelectedId(inv.id)}
+                aria-pressed={active}
+                className={`flex items-center justify-between gap-3 p-2.5 text-left w-full transition-colors ${
+                  active ? "bg-ink text-white rounded-full" : "hover:bg-surface rounded-[20px]"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs ${
+                      active ? "bg-white text-ink" : "bg-surface text-ink"
+                    }`}
+                  >
+                    {inv.customer[0]}
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold">{inv.id}</div>
+                    <div className={`text-[11px] ${active ? "text-white/60" : "text-muted"}`}>{inv.due}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`text-[11px] px-2.5 py-0.5 rounded-full ${
+                      active ? "bg-white/15 text-white" : "bg-surface text-muted"
+                    }`}
+                  >
+                    {inv.status}
+                  </span>
+                  <span className="text-xs font-bold">{usd(inv.amount)}</span>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </section>
 
-      <section className="lg:col-span-4 bg-white border border-line rounded-[28px] p-6 flex flex-col justify-between overflow-hidden">
+      <section className="lg:col-span-7 bg-white border border-line rounded-[28px] p-6 flex flex-col justify-between">
         <div>
-          <span className="text-xs text-muted">Available for Instant Payout</span>
-          <div className="text-3xl font-bold mt-2">{usd(metrics.cashFlow)}</div>
-          <div className="grid grid-cols-3 gap-2.5 mt-5">
-            {methods.map((m) => (
-              <button
-                key={m.name}
-                className={`p-3 text-left rounded-[20px] border transition-colors ${
-                  m.selected ? "bg-accent border-accent text-ink" : "bg-surface border-line text-ink hover:border-ink"
-                }`}
-              >
-                <span className={`text-[11px] block ${m.selected ? "text-ink/70" : "text-muted"}`}>{m.ref}</span>
-                <span className="text-xs font-bold">{m.name}</span>
-              </button>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-6 border-b border-line">
+            <div>
+              <span className="text-[11px] text-muted">Invoice details</span>
+              <div className="text-xl font-bold mt-1">
+                {selected.id}{" "}
+                <span className="text-[11px] font-medium text-muted bg-surface px-2 py-0.5 rounded-full align-middle">{selected.status}</span>
+              </div>
+            </div>
+            <div>
+              <span className="text-[11px] text-muted">Company</span>
+              <div className="text-base font-bold mt-1">{selected.company}</div>
+            </div>
+            <div>
+              <span className="text-[11px] text-muted">Customer</span>
+              <div className="text-xs font-bold mt-1">{selected.customer}</div>
+              <div className="text-[11px] text-muted">CEO {selected.company} Pvt Ltd</div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 my-6">
+            {lineItems.map((item) => (
+              <div key={item.label} className="bg-surface rounded-[20px] p-4">
+                <div className="text-sm font-bold">{item.amount}</div>
+                <span className="text-[11px] text-muted">{item.label}</span>
+              </div>
             ))}
           </div>
         </div>
-        <div className="mt-4 flex justify-end">
-          <button className="bg-ink text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-accent hover:text-ink transition-colors">
+
+        <div className="pt-5 border-t border-line flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-6 flex-wrap">
+            <div><span className="text-[11px] text-muted block">Sub Total</span><span className="text-sm font-bold">{usd(selected.amount)}</span></div>
+            <div><span className="text-[11px] text-muted block">Total</span><span className="text-sm font-bold">{usd(selected.amount)}</span></div>
+            <div><span className="text-[11px] text-muted block">Balance Due</span><span className="text-sm font-bold">{usd(selected.amount)}</span></div>
+          </div>
+          <button className="bg-accent text-ink font-bold px-5 py-2.5 rounded-full text-xs hover:bg-ink hover:text-white transition-colors">
             Pay out now
           </button>
         </div>
