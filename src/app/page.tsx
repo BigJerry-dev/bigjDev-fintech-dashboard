@@ -1,8 +1,7 @@
 import Header from "../components/Header";
 import TitleBar from "../components/TitleBar";
 import MetricsRow from "../components/MetricsRow";
-import FilterBar from "../components/FilterBar";
-import InvoiceWorkspace from "../components/InvoiceWorkspace";
+import Transactions from "../components/Transactions";
 
 export default function Home() {
   return (
@@ -10,8 +9,7 @@ export default function Home() {
       <Header />
       <TitleBar />
       <MetricsRow />
-      <FilterBar />
-      <InvoiceWorkspace />
+      <Transactions />
     </main>
   );
 }
