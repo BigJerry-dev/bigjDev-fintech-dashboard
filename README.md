@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BigJDev Pay
 
-## Getting Started
+A payment gateway operations dashboard for staff and executives. Built to show how I work with money products.
 
-First, run the development server:
+**Live demo:** https://bigjdev-fintech-dashboard.pages.dev
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## What it does
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Overview:** total payment volume, net revenue, success rate and pending settlements, each with its change against the previous 30 days.
+- **Volume chart:** payment volume by month, drawn from the data.
+- **Settlements:** pending payouts, the next settlement time, and the split by channel (card, bank transfer, wallet).
+- **Transactions:** filter by status, merchant and channel. The tab counts update with the filters.
+- **Transaction details:** masked customer email, gross amount, gateway fee and net paid to the merchant. Failed payments show why they were declined. The refund button only appears on successful payments.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How it is built
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js (App Router), TypeScript and Tailwind CSS 4
+- Money is stored in cents and formatted in one place, to avoid rounding errors
+- Filter state lives in one parent component and is passed down to the filter bar and the list
+- Times are shown in UTC so the server and the browser print the same text
+- Responsive from phone to wide screens
 
-## Learn More
+## Run it locally
 
-To learn more about Next.js, take a look at the following resources:
+    npm install
+    npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Then open http://localhost:3000.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## About the data
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All merchants, customers, amounts and fees are made up for the demo. Gateway fee rules are simplified assumptions, not any real company's pricing.
