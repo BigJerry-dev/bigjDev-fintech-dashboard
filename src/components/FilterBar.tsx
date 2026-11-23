@@ -43,6 +43,8 @@ type Props = {
   channels: string[];
   channel: string;
   onChannelChange: (channel: string) => void;
+  exportCount: number;
+  onExport: () => void;
 };
 
 export default function FilterBar(props: Props) {
@@ -51,6 +53,18 @@ export default function FilterBar(props: Props) {
       <div className="flex items-center gap-2 flex-wrap">
         <Select label="All merchants" value={props.merchant} options={props.merchants} onChange={props.onMerchantChange} />
         <Select label="All channels" value={props.channel} options={props.channels} onChange={props.onChannelChange} />
+        <button
+          onClick={props.onExport}
+          disabled={props.exportCount === 0}
+          className="bg-white border border-line text-ink px-3.5 py-1.5 rounded-full font-semibold flex items-center gap-1.5 hover:border-ink transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-line"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 3v12" />
+            <path d="m7 10 5 5 5-5" />
+            <path d="M5 21h14" />
+          </svg>
+          Download CSV ({props.exportCount})
+        </button>
       </div>
 
       <div className="max-w-full overflow-x-auto bg-white border border-line p-1 rounded-full flex items-center gap-1 font-medium">

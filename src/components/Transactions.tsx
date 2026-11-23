@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { channels, statuses, transactions } from "../data/transactions";
+import { downloadCsv } from "../lib/csv";
+import { transactionsCsv } from "../lib/reports";
 import FilterBar from "./FilterBar";
 import type { StatusFilter } from "./FilterBar";
 import TransactionsWorkspace from "./TransactionsWorkspace";
@@ -26,6 +28,11 @@ export default function Transactions() {
   // If the selected transaction was filtered out, fall back to the first one in the list.
   const selected = items.find((t) => t.id === selectedId) ?? items[0];
 
+  const handleExport = () => {
+    const day = new Date().toISOString().slice(0, 10);
+    downloadCsv(`transactions-${day}.csv`, transactionsCsv(items));
+  };
+
   return (
     <>
       <FilterBar
@@ -38,6 +45,8 @@ export default function Transactions() {
         channels={channels}
         channel={channel}
         onChannelChange={setChannel}
+        exportCount={items.length}
+        onExport={handleExport}
       />
       <TransactionsWorkspace items={items} selected={selected} onSelect={setSelectedId} />
     </>
