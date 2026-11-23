@@ -18,3 +18,13 @@ html {
   background: var(--color-accent);
   color: var(--color-ink);
 }
+
+/* Hides the scrollbar on scrollable rows (the nav pill on phones) but keeps swiping working. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
