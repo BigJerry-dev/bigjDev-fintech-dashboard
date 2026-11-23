@@ -1,3 +1,5 @@
+import ExportReportButton from "./ExportReportButton";
+
 type Props = {
   title?: string;
   pill?: string;
@@ -15,9 +17,7 @@ export default function TitleBar({ title = "Overview", pill = "Last 30 days" }: 
       </div>
 
       <div className="flex items-center gap-2.5">
-        <button className="bg-white border border-line px-4 py-2 rounded-full text-xs font-semibold text-ink hover:border-ink transition-colors">
-          Export report
-        </button>
+        <ExportReportButton />
         <button className="group bg-ink border border-ink px-4 py-2 rounded-full text-xs font-semibold text-white flex items-center gap-2 hover:bg-accent hover:border-accent hover:text-ink transition-colors">
           <span className="text-accent text-base leading-none group-hover:text-ink">+</span> Add merchant
         </button>
