@@ -1,11 +1,16 @@
-export default function TitleBar() {
+type Props = {
+  title?: string;
+  pill?: string;
+};
+
+export default function TitleBar({ title = "Overview", pill = "Last 30 days" }: Props) {
   return (
     <div className="flex items-center justify-between gap-4 flex-wrap">
       <div className="flex items-center gap-3 flex-wrap">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Overview</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{title}</h1>
         <span className="px-3 py-1 bg-white border border-line rounded-full text-xs font-semibold text-muted flex items-center gap-1.5 whitespace-nowrap">
           <span className="w-2 h-2 rounded-full bg-accent"></span>
-          Last 30 days
+          {pill}
         </span>
       </div>
 
